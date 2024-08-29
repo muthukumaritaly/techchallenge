@@ -5,9 +5,22 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
   try {
     const { origin, destination, sort_by = "fastest" } = req.body;
-
+    console.log('origin',origin)
+    console.log('destination',destination)
     if (!origin || !destination) {
       throw new Error("Missing required params origin or destination")
+    }
+
+    const orginAndDestList = [
+      "ATL", "PEK", "LAX", "DXB", "HND", "ORD", "LHR", "PVG", "CDG", "DFW",
+      "AMS", "FRA", "IST", "CAN", "JFK", "SIN", "DEN", "ICN", "BKK", "SFO",
+      "LAS", "CLT", "MIA", "KUL", "SEA", "MUC", "EWR", "MAD", "HKG", "MCO",
+      "PHX", "IAH", "SYD", "MEL", "GRU", "YYZ", "LGW", "BCN", "MAN", "BOM",
+      "DEL", "ZRH", "SVO", "DME", "JNB", "ARN", "OSL", "CPH", "HEL", "VIE"
+  ]
+
+    if (!orginAndDestList.includes(origin) || !orginAndDestList.includes(destination)) {
+      throw new Error("Given origin or destination is not in the list")
     }
 
     const tripAPIResult = await fetch(`https://z0qw1e7jpd.execute-api.eu-west-1.amazonaws.com/default/trips?origin=${origin}&destination=${destination}`, {

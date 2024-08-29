@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import indexRouter from './routes/index.js';
 import efficientRouter from './routes/efficientRoute.js';
+import tripRouter from './routes/tripRouter.js'
 import { fileURLToPath } from 'url';
 
 // This gets the equivalent of __dirname in CommonJS
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/efficientRouteFinder', efficientRouter);
+app.use('/tripRouter', tripRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
